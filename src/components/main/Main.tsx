@@ -35,6 +35,7 @@ return (
 		<Container
 			wrap="wrap"
 			padding="0 25px 20px"
+			width="100%"
 		>
 			{beers?.length > 0 ?
 				beers.map((beer:Beer) => (
