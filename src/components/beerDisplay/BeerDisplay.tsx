@@ -8,6 +8,7 @@ import StarIcon from '@material-ui/icons/Star';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import { IconButton } from '@material-ui/core/';
 import { Img } from "../common/img/Img";
+import { escapeHtml } from "../../utils/escape";
 
 const BeersDisplay = (beer:Beer) => {
 
@@ -51,7 +52,7 @@ const favorites = useSelector((state: State) => state.favorites);
 			</Col>
 			<Img
 				src={beer.image_url ? beer.image_url : "https://static.horiba.com/fileadmin/Horiba/_processed_/3/6/csm_csm_01_02-2019_Beer_Brewing_53ef2818e5_948557e774.png"}
-				alt={beer.name}
+				alt={escapeHtml(beer.name)}
 				margin="auto"
 				maxHeight="200px"
 			/>
