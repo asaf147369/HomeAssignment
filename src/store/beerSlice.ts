@@ -17,15 +17,16 @@ const initialState: Readonly<State> = {
   showDeletePopup: false,
   page: 1,
   food: "",
-  beers: []
-
+  beers: [],
+  favorites: [],
+  count: 5
 };
 
 export const beerSlice = createSlice({
   name: 'state',
   initialState,
   reducers: {
-    handleFavorite: (state: State, { payload }: { payload: any }) => {
+    handleFavorite: (state: State, { payload }: { payload: Beer }) => {
       let exist: boolean;
       if (state.favorites) {
         exist = state.favorites.some((beer) => beer.id === payload.id);
@@ -43,6 +44,7 @@ export const beerSlice = createSlice({
       } else {
         const beer: Beer = {
           ...payload,
+          rank: 1
         }
         state.favorites.push(beer);
       }
@@ -70,6 +72,10 @@ export const beerSlice = createSlice({
     resetPageNumber: (state: State) => {
       state.page = 1;
     },
+    changeRanking: (state: State, { payload }: { payload: { id: number; rank: number } }) => {
+      const index = state.favorites.findIndex(x => x.id === payload.id);
+      state.favorites[index].rank = payload.rank;
+    },
   },
   extraReducers: {
     [getBeersApi.pending.toString()]: (state: State) => {
@@ -78,6 +84,7 @@ export const beerSlice = createSlice({
     },
     [getBeersApi.fulfilled.toString()]: (state: State, { payload } : { payload: Beer[]}) => {
       state.loading = false;
+      state.count = 10;
       state.beers = payload;
     },
     [getBeersApi.rejected.toString()]: (state: State, { payload }) => {
@@ -90,6 +97,7 @@ export const beerSlice = createSlice({
     },
     [getBeersByFoodApi.fulfilled.toString()]: (state: State, { payload }: { payload: Beer[] }) => {
       state.loading = false;
+      state.count = 3;
       state.beers = payload;
     },
     [getBeersByFoodApi.rejected.toString()]: (state: State, { payload }) => {
@@ -106,7 +114,8 @@ export const {
   deleteAllFavorits, 
   changePagination, 
   setSearchValue,
-  resetPageNumber
+  resetPageNumber,
+  changeRanking
 } = beerSlice.actions;
 
 export default beerSlice.reducer;

@@ -1,16 +1,16 @@
 import './App.css';
 import { useSelector } from 'react-redux';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-
 import Favorites from './components/favorites/Favorits';
 import Main from './components/main/Main';
 import Alert from './components/common/alert/Alert';
 import Header from './components/header/Header';
 import BeerPopup from './components/popups/beerPopup/BeerPopup';
+import { State } from './interfaces/state';
 
 function App() {
 
-  const { error, current }  = useSelector((state: any) => state);
+  const { error, current }  = useSelector((state: State) => state);
 
   return (
     <div className="App">

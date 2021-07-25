@@ -1,5 +1,5 @@
 import { Pagination } from "@material-ui/lab";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Beer } from "../../interfaces/beer";
 import { State } from "../../interfaces/state";
@@ -8,43 +8,58 @@ import { changePagination } from "../../store/beerSlice";
 import BeerDisplay from "../beerDisplay/BeerDisplay";
 import { Container } from "../common/container/Container";
 import { Spinner } from "../common/Spinner/Spinner";
-import SearchBar from "../search/SearchBar";
+import { Title } from "../common/text/Title";
+import { SearchBar } from "../search/SearchBar";
 
 const Main = () => {
 
-	const { beers, page, food } = useSelector((state: State) => state);
-	
+	const { beers, page, food, loading, error, count } = useSelector((state: State) => state);
+
 	const dispatch = useDispatch();
 
-	useEffect(() => { 
-		if(!food) {
-			dispatch(getBeersApi(page)); 
+	useEffect(() => {
+		if (!food) {
+			dispatch(getBeersApi(page));
 		} else {
-			dispatch(getBeersByFoodApi({food, page}))
+			dispatch(getBeersByFoodApi({ food, page }))
 		}
-	// eslint-disable-next-line react-hooks/exhaustive-deps
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [page, dispatch]);
 
-	const handleChange = (e: React.ChangeEvent<any>, value: number) => {
+	const handleChange = (e: React.ChangeEvent<unknown>, value: number) => {
 		dispatch(changePagination(value));
 	}
 
-return (
-	<Container dir="column" alignItems="flex-end" padding="15px 25px">
-		<SearchBar />
-		<Container
-			wrap="wrap"
-			padding="0 25px 20px"
-			width="100%"
-		>
-			{beers?.length > 0 ?
-				beers.map((beer:Beer) => (
-					<BeerDisplay {...beer} key={beer.id}></BeerDisplay>
-				)) : <Spinner />}
+	return (
+		<Container dir="column" alignItems="flex-end" padding="15px 25px">
+			<SearchBar />
+			{loading ? (
+				<Container alignItems="center" justify="center" width="100%" height="400px">
+					<Spinner />
+				</Container>
+			) : (beers?.length > 0 ? (
+				<Container
+					wrap="wrap"
+					width="100%"
+					gap="30px"
+					margin="25px 0"
+					justify="flex-start"
+				>
+					{beers.map((beer: Beer) => (
+						<BeerDisplay {...beer} key={beer.id}></BeerDisplay>
+					))}
+				</Container>
+			) : (
+				error ? <Title level="2">{error}</Title> :
+					<Title level="2">
+						No beers found
+					</Title>
+			))}
+			{beers?.length >= 8 ?
+				<Pagination count={count} page={page} onChange={handleChange} /> : <div></div>
+			}
 		</Container>
-		<Pagination count={10} page={page} onChange={handleChange} />
-	</Container>
-)
+	)
 
 }
 

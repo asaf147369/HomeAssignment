@@ -28,6 +28,5 @@ interface Props {
   children: string | string[] | null;
   textAlign?: string;
   border?: string;
-  onClick?: any;
   cursor?: string;
 }

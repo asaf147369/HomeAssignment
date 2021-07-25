@@ -9,6 +9,8 @@ import StarBorderIcon from '@material-ui/icons/StarBorder';
 import { IconButton } from '@material-ui/core/';
 import { Img } from "../common/img/Img";
 import { escapeHtml } from "../../utils/escape";
+import { BeerRanking } from "../beerRanking/BeerRanking";
+import React from "react";
 
 const BeersDisplay = (beer:Beer) => {
 
@@ -38,17 +40,21 @@ const favorites = useSelector((state: State) => state.favorites);
 			dir="column"
 			justify="center"
 			alignItems="center"
-			width="calc(100% / 4 - 60px)"
+			width="calc(100% / 4 - 23px)"
 			border="1px solid black"
 			radius="8px"
 			padding="25px"
-			margin="30px 30px"
 			onClick={openModal}
 		>
-			<Col margin="0 0 0 auto">
-				<IconButton onClick={handleClick}>
-					{existInFavorite ? <StarIcon style={{ color: '#EADB4C' }} /> : <StarBorderIcon />}
-				</IconButton>
+			<Col width="100%" margin="0 0 10px">
+				<React.Fragment>
+					{beer.showRank && <BeerRanking {...beer}/>}
+				</React.Fragment>
+				<Col margin="0 0 0 auto">
+					<IconButton onClick={handleClick}>
+						{existInFavorite ? <StarIcon style={{ color: '#EADB4C' }} /> : <StarBorderIcon />}
+					</IconButton>
+				</Col>
 			</Col>
 			<Img
 				src={beer.image_url ? beer.image_url : "https://static.horiba.com/fileadmin/Horiba/_processed_/3/6/csm_csm_01_02-2019_Beer_Brewing_53ef2818e5_948557e774.png"}

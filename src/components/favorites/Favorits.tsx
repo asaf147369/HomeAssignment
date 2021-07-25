@@ -5,10 +5,14 @@ import { Container } from "../common/container/Container";
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import { toggleDeletePopup } from "../../store/beerSlice";
 import DeleteFavoritsPopup from "../popups/deleteFavoritsPopup/DeleteFavoritsPopup";
+import { Title } from "../common/text/Title";
+import React from "react";
+import { State } from "../../interfaces/state";
+import { Beer } from "../../interfaces/beer";
 
-const Main = () => {
+const Favorits = () => {
 
-	const { favorites, showDeletePopup } = useSelector((state: any) => state);
+	const { favorites, showDeletePopup } = useSelector((state: State) => state);
 
 	const dispatch = useDispatch();
 
@@ -16,21 +20,30 @@ const Main = () => {
 		dispatch(toggleDeletePopup('delete'));
 	}
 
-
 	return (
 		<Container dir="column" alignItems="flex-end" padding="15px 25px">
-			<Button variant="outlined" startIcon={<DeleteForeverIcon />} onClick={openDeleteModal}>
-				Delete
-			</Button>
+			{favorites?.length ? 
+				<Button variant="outlined" startIcon={<DeleteForeverIcon />} onClick={openDeleteModal}>
+					Delete
+				</Button> : <React.Fragment />
+			}
+			{ showDeletePopup ? <DeleteFavoritsPopup></DeleteFavoritsPopup> : <React.Fragment />}
 			<Container
 				wrap="wrap"
 				width="100%"
 			>
-				{ showDeletePopup && <DeleteFavoritsPopup></DeleteFavoritsPopup>}
-				{favorites?.length > 0 &&
-					favorites.map((beer: any) => (
-						<BeerDisplay {...beer} key={beer.id}></BeerDisplay>
-					))}
+				<Container
+					wrap="wrap"
+					width="100%"
+					gap="30px"
+					margin="25px 0"
+					justify="flex-start"
+				>
+					{favorites.length > 0 ?
+						favorites.map((beer: Beer) => (
+							<BeerDisplay {...beer} key={beer.id} showRank={true}></BeerDisplay>
+						)) : <Title level="2">No favorits selected</Title>}
+				</Container>
 			</Container>
 		</Container>
 		
@@ -38,4 +51,4 @@ const Main = () => {
 
 }
 
-export default Main
+export default Favorits;

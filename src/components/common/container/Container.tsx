@@ -15,6 +15,7 @@ const SContainer = styled.div<Props>`
   flex-wrap: ${({ wrap }) => wrap};
   overflow: ${({ overflow }) => overflow};
   background-color: ${({ backgroundColor }) => backgroundColor};
+  gap: ${({gap}) => gap};
   @media (max-width: 768px) {
     flex-wrap: wrap;
     justify-content: center;
@@ -42,4 +43,5 @@ interface Props {
   backgroundColor?: string;
   children: JSX.Element[] | JSX.Element;
   className?: string;
+  gap?: string;
 }

@@ -5,4 +5,6 @@ export interface Beer {
 	first_brewed: string;
 	tagline: string;
 	description: string;
+	showRank?: boolean;
+	rank?: number;
 }
