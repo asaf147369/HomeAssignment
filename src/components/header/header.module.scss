@@ -1,0 +1,31 @@
+.headerWrapper {
+    @media (max-width:768px) {
+        padding-bottom: 30px !important;
+    }
+}
+
+
+.ul {
+    list-style: none;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+    @media (min-width: 768px) {
+        margin-inline-start: 30px;
+    }
+    @media (max-width: 768px) {
+        flex-basis: 100%;
+    }
+}
+
+.link {
+    cursor: pointer;
+    font-weight: 500;
+    text-decoration: none;
+    margin: 0 15px;
+    border-bottom: 1px solid transparent;
+    padding-bottom: 5px;
+    color: black;
+}
