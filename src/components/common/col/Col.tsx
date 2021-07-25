@@ -14,6 +14,7 @@ const SCol = styled.div<Props>`
   width: ${({ width }) => width};
   border: ${({border}) => border};
   border-radius: ${({ radius }) => radius};
+  text-align: ${({textAlign}) => textAlign}
   className: ${({className}) => className};
   @media (max-width: 768px) {
     width: 100%;
@@ -35,6 +36,7 @@ interface Props {
   width?: string;
   border?: string;
   radius?: string;
+  textAlign?: string;
   cursor?: string;
   children: JSX.Element | JSX.Element[];
   className?: string;

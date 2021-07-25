@@ -31,9 +31,11 @@ const BeerPopup = (beer: Beer) => {
 				width="100%"
 				padding="25px"
 			>
-				<Title level="2" textAlign="center">
-					{beer.name}
-				</Title>
+				<Col textAlign="center">
+					<Title level="2">
+						{beer.name}
+					</Title>
+				</Col>
 				<Text size="1.5rem" margin="auto 0 0">
 					first brewed:&nbsp;{beer.first_brewed}
 				</Text>

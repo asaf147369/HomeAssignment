@@ -11,5 +11,4 @@ interface Props {
 	level: string;
 	children: string | string[] | JSX.Element | JSX.Element[] | undefined;
 	margin?: string;
-	textAlign?: string;
 }
