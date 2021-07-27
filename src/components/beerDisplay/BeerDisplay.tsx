@@ -92,14 +92,14 @@ const BeersDisplay = (beer: Beer) => {
 					<React.Fragment>
 						{beer.isFavoritesPage && <BeerRanking {...beer} />}
 					</React.Fragment>
-					<Col margin="0 0 0 auto">
+					<Col margin="0 0 0 auto" width="auto !important">
 						<IconButton onClick={handleFavoriteToggle}>
 							{inFavorits ? <StarIcon style={{ color: '#EADB4C' }} /> : <StarBorderIcon />}
 						</IconButton>
 					</Col>
 				</Col>
 				<Img
-					src={beer.image_url}
+					src={beer.image_url ? beer.image_url : "https://static.horiba.com/fileadmin/Horiba/_processed_/3/6/csm_csm_01_02-2019_Beer_Brewing_53ef2818e5_948557e774.png"}
 					alt={escapeHtml(beer.name)}
 					margin="auto"
 					maxHeight="200px"
