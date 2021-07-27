@@ -84,6 +84,7 @@ const BeersDisplay = (beer: Beer) => {
 				border="1px solid rgba(0, 0, 0, 0.23)"
 				radius="8px"
 				padding="25px"
+				cursor="pointer"
 				onClick={openBeerModal}
 				style={isLeaving && beer.isFavoritesPage ? unmountedStyle : myTimeout && beer.isFavoritesPage ? mountedStyle : {}}
 			>

@@ -15,6 +15,7 @@ const SCol = styled.div<Props>`
   border: ${({border}) => border};
   border-radius: ${({ radius }) => radius};
   text-align: ${({textAlign}) => textAlign};
+  cursor: ${({cursor}) => cursor};
   @media (max-width: 768px) {
     width: 100%;
   }

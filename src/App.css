@@ -55,3 +55,8 @@ body {
     margin-inline-start: -32px;
   }
 }
+
+
+.MuiPaginationItem-ellipsis {
+  pointer-events: none;
+}
