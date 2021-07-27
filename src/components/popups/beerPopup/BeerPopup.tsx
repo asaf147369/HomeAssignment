@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Beer } from "../../../interfaces/beer";
 import { State } from "../../../interfaces/state";
-import { changeCurrent } from "../../../store/beerSlice";
+import { changeCurrentBeer } from "../../../store/beerSlice";
 import { Col } from "../../common/col/Col";
 import { Text } from "../../common/text/Text";
 import { Dialog } from '@material-ui/core/';
@@ -14,7 +14,7 @@ const BeerPopup = (beer: Beer) => {
 	const dispatch = useDispatch();
 
 	const handleClose = () => {
-		dispatch(changeCurrent(null))
+		dispatch(changeCurrentBeer(null))
 	};
 
 	return (
@@ -41,18 +41,15 @@ const BeerPopup = (beer: Beer) => {
 				</Text>
 				<br />
 				<Text size="1.5rem" margin="auto 0 0">
-					tagline:&nbsp;
-					{beer.tagline}
+					tagline:&nbsp;{beer.tagline}
 				</Text>
 				<br />
 				<Text size="1.5rem" margin="auto 0 0">
-					description:&nbsp;
-					{beer.description}
+					description:&nbsp;{beer.description}
 				</Text>
 			</Col>
 		</Dialog>
 	)
-
 }
 
 export default BeerPopup;

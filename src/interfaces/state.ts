@@ -6,8 +6,6 @@ export interface State {
 	current: Beer | null;
 	loading: boolean;
 	error: string;
-	showDeletePopup: boolean;
 	page: number;
 	food: string;
-	count: number;
 }

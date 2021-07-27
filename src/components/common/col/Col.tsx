@@ -40,4 +40,5 @@ interface Props {
   children: JSX.Element | JSX.Element[];
   className?: string;
   onClick?: React.MouseEventHandler<HTMLDivElement>;
+  style?: any;
 }

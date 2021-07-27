@@ -4,22 +4,15 @@ import { State } from '../interfaces/state';
 import {
   getBeersApi, getBeersByFoodApi
 } from './beerApi';
-// import { v4 as uuidv4 } from 'uuid';
-
-// import { State } from "../interfaces/State";
-// import { Fav } from '../interfaces/Fav';
-// import { Current } from '../interfaces/Current';
 
 const initialState: Readonly<State> = {
   loading: false,
   error: '',
   current: null,
-  showDeletePopup: false,
   page: 1,
   food: "",
   beers: [],
-  favorites: [],
-  count: 5
+  favorites: []
 };
 
 export const beerSlice = createSlice({
@@ -49,28 +42,20 @@ export const beerSlice = createSlice({
         state.favorites.push(beer);
       }
     },
-    changeCurrent: (state: State, { payload }: { payload: Beer | null }) => {
+    changeCurrentBeer: (state: State, { payload }: { payload: Beer | null }) => {
       state.current = payload;
     },
-    toggleDeletePopup: (state: State, { payload }: { payload: string | null }) => {
-      if (payload === "delete") {
-        state.showDeletePopup = true;
-      } else {
-        state.showDeletePopup = false;
-      }
-    },
     deleteAllFavorits: (state: State) => {
-      state.favorites = [];
-      state.showDeletePopup = false;
+      state.favorites.length = 0;
     },
     changePagination: (state: State, { payload }: { payload: number }) => {
       state.page = payload;
     },
-    setSearchValue: (state: State, { payload }: {payload: string }) => {
-      state.food = payload;
-    },
     resetPageNumber: (state: State) => {
       state.page = 1;
+    },
+    setSearchValue: (state: State, { payload }: {payload: string }) => {
+      state.food = payload;
     },
     changeRanking: (state: State, { payload }: { payload: { id: number; rank: number } }) => {
       const index = state.favorites.findIndex(x => x.id === payload.id);
@@ -84,20 +69,19 @@ export const beerSlice = createSlice({
     },
     [getBeersApi.fulfilled.toString()]: (state: State, { payload } : { payload: Beer[]}) => {
       state.loading = false;
-      state.count = 10;
       state.beers = payload;
     },
     [getBeersApi.rejected.toString()]: (state: State, { payload }) => {
       state.loading = false;
       state.error = payload;
     },
+
     [getBeersByFoodApi.pending.toString()]: (state: State) => {
       state.loading = true;
       state.error = '';
     },
     [getBeersByFoodApi.fulfilled.toString()]: (state: State, { payload }: { payload: Beer[] }) => {
       state.loading = false;
-      state.count = 3;
       state.beers = payload;
     },
     [getBeersByFoodApi.rejected.toString()]: (state: State, { payload }) => {
@@ -109,8 +93,7 @@ export const beerSlice = createSlice({
 
 export const { 
   handleFavorite, 
-  changeCurrent, 
-  toggleDeletePopup, 
+  changeCurrentBeer, 
   deleteAllFavorits, 
   changePagination, 
   setSearchValue,

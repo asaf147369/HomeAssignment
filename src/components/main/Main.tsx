@@ -13,7 +13,7 @@ import { SearchBar } from "../search/SearchBar";
 
 const Main = () => {
 
-	const { beers, page, food, loading, error, count } = useSelector((state: State) => state);
+	const { beers, page, food, loading, error } = useSelector((state: State) => state);
 
 	const dispatch = useDispatch();
 
@@ -26,7 +26,7 @@ const Main = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [page, dispatch]);
 
-	const handleChange = (e: React.ChangeEvent<unknown>, value: number) => {
+	const handlePageChange = (e: React.ChangeEvent<unknown>, value: number) => {
 		dispatch(changePagination(value));
 	}
 
@@ -55,8 +55,8 @@ const Main = () => {
 						No beers found
 					</Title>
 			))}
-			{beers?.length >= 8 ?
-				<Pagination count={count} page={page} onChange={handleChange} /> : <div></div>
+			{beers?.length ?
+				<Pagination count={10} page={page} onChange={handlePageChange} /> : <React.Fragment />
 			}
 		</Container>
 	)

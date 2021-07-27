@@ -1,34 +1,33 @@
-import { useDispatch, useSelector } from "react-redux";
-import { State } from "../../../interfaces/state";
-import { deleteAllFavorits, toggleDeletePopup } from "../../../store/beerSlice";
+import { useDispatch } from "react-redux";
+import { deleteAllFavorits } from "../../../store/beerSlice";
 import { Button, Dialog, DialogActions, DialogTitle } from '@material-ui/core/';
+import React from "react";
 
-const DeleteFavoritsPopup = () => {
-
-
-	const { showDeletePopup } = useSelector((state: State) => state);
+const DeleteFavoritsPopup = (props: { modalOpen: boolean ,toggleModal:any}) => {
 
 	const dispatch = useDispatch();
 
-	const handleClick = () => {
+	const deleteAll = () => {
+		props.toggleModal(false);
 		dispatch(deleteAllFavorits());
 	};
 
-	const handleClose = () => {
-		dispatch(toggleDeletePopup(null))
-	};
+	const closeModal = () => {
+		props.toggleModal(false);
+	}
+
 
 	return (
 		<Dialog
-			open={showDeletePopup}
-			onClose={handleClose}
+			open={props.modalOpen}
+			onClose={closeModal}
 		>
-			<DialogTitle id="alert-dialog-title">{"Are you sure you want to delete all favorites?"}</DialogTitle>
+			<DialogTitle id="alert-dialog-title">Are you sure you want to delete all favorites?</DialogTitle>
 			<DialogActions>
-				<Button onClick={handleClose} color="primary">
+				<Button onClick={closeModal} color="primary">
 					Close popup
 				</Button>
-				<Button onClick={handleClick} color="primary">
+				<Button onClick={deleteAll} color="primary">
 					Delete all
 				</Button>
 			</DialogActions>

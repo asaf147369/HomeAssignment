@@ -14,7 +14,6 @@ export const SearchBar = () => {
 	const dispatch = useDispatch();
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		dispatch(resetPageNumber());
 		dispatch(setSearchValue(event.target.value));
 	}
 	
