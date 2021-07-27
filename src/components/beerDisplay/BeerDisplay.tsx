@@ -12,12 +12,19 @@ import { escapeHtml } from "../../utils/escape";
 import { BeerRanking } from "../beerRanking/BeerRanking";
 import React, { useState } from "react";
 import CloseIcon from '@material-ui/icons/Close';
+import { useEffect } from "react";
 
 const BeersDisplay = (beer: Beer) => {
 
 	const favorites = useSelector((state: State) => state.favorites);
 
 	const dispatch = useDispatch();
+
+	const [isLeaving, setIsLeaving] = useState(false);
+	const [myTimeout, setMyTimeout] = useState<any>(null)
+	const [toastOpen, setToastOpen] = useState(false);
+	const [inFavorits, setInFavorites] = useState(false);
+
 
 	let existInFavorite: boolean = false;
 	if (favorites?.length) {
@@ -26,27 +33,30 @@ const BeersDisplay = (beer: Beer) => {
 		);
 	}
 
-	const [isLeaving, setIsLeaving] = useState(false);
-	const [myTimeout, setMyTimeout] = useState<any>(null)
-	const [toastOpen, setToastOpen] = useState(false);
-	
+	useEffect(() => {
+		setInFavorites(existInFavorite)
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
 	const handleFavoriteToggle = (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.stopPropagation();
-		if (beer.isFavoritesPage) {
+		setInFavorites(!inFavorits);
+		if ( existInFavorite) {
 			setToastOpen(true);
 			setIsLeaving(!isLeaving);
 			let timeout = setTimeout(function () {
-				console.log("5 sec ended");
 				dispatch(handleFavorite(beer))
 			}, 5000);
 			setMyTimeout(timeout);
 		} else {
 			dispatch(handleFavorite(beer));
 		}
+		existInFavorite = !existInFavorite;
 	};
 
 	const UndoRemoveFromFavorits = () => {
 		setIsLeaving(!isLeaving);
+		setInFavorites(true);
 		clearTimeout(myTimeout);
 	}
 
@@ -75,7 +85,7 @@ const BeersDisplay = (beer: Beer) => {
 				radius="8px"
 				padding="25px"
 				onClick={openBeerModal}
-				style={isLeaving ?  unmountedStyle : myTimeout ? mountedStyle : {}}
+				style={isLeaving && beer.isFavoritesPage ? unmountedStyle : myTimeout && beer.isFavoritesPage ? mountedStyle : {}}
 			>
 				<Col width="100%" margin="0 0 10px">
 					<React.Fragment>
@@ -83,7 +93,7 @@ const BeersDisplay = (beer: Beer) => {
 					</React.Fragment>
 					<Col margin="0 0 0 auto">
 						<IconButton onClick={handleFavoriteToggle}>
-							{existInFavorite ? <StarIcon style={{ color: '#EADB4C' }} /> : <StarBorderIcon />}
+							{inFavorits ? <StarIcon style={{ color: '#EADB4C' }} /> : <StarBorderIcon />}
 						</IconButton>
 					</Col>
 				</Col>
@@ -98,7 +108,7 @@ const BeersDisplay = (beer: Beer) => {
 					{beer.name}
 				</Text>
 			</Col>
-			{isLeaving && beer.isFavoritesPage && toastOpen && (
+			{toastOpen && (
 				<Snackbar
 					open={isLeaving}
 					anchorOrigin={{
@@ -108,7 +118,7 @@ const BeersDisplay = (beer: Beer) => {
 					autoHideDuration={5000}
 					onClose={handleClose}
 				>
-					<Alert severity="warning">			
+					<Alert severity="warning">
 						Beer removed from favorites
 						<Button color="secondary" size="small" onClick={UndoRemoveFromFavorits}>
 							UNDO

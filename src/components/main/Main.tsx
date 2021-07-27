@@ -56,7 +56,7 @@ const Main = () => {
 					</Title>
 			))}
 			{beers?.length ?
-				<Pagination count={10} page={page} onChange={handlePageChange} /> : <React.Fragment />
+				<Pagination count={10} page={page} onChange={handlePageChange} size="medium" /> : <React.Fragment />
 			}
 		</Container>
 	)
