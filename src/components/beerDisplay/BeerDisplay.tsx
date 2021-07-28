@@ -90,7 +90,7 @@ const BeersDisplay = (beer: Beer) => {
 			>
 				<Col width="100%" margin="0 0 10px">
 					<React.Fragment>
-						{beer.isFavoritesPage && <BeerRanking {...beer} />}
+						{beer.isFavoritesPage && !isLeaving && <BeerRanking {...beer} />}
 					</React.Fragment>
 					<Col margin="0 0 0 auto" width="auto !important">
 						<IconButton onClick={handleFavoriteToggle}>
