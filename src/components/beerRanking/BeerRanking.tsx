@@ -1,4 +1,4 @@
-import Select from '@material-ui/core/Select';
+import Select, { SelectChangeEvent } from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import { useDispatch } from "react-redux";
 import { changeRanking } from "../../store/beerSlice";
@@ -12,10 +12,10 @@ export const BeerRanking = (beer:Beer) => {
 
 	const [open, setOpen] = useState(false);
 
-	const handleBeerRankingChange = (event: React.ChangeEvent<{ value: number }>) => {
+	const handleBeerRankingChange = (event: SelectChangeEvent<number>) => {
 		const newBeer = {
 			id: beer.id,
-			rank: event.target.value
+			rank: +event.target.value
 		}
 		dispatch(changeRanking(newBeer));
 	}
